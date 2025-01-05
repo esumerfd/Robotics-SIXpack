@@ -18,6 +18,7 @@ simple `make` solution using the arduino-cli to build and upload.
 
 * brew install arduino-cli
 * make init
+* Install FTDI drivers: https://ftdichip.com
 
 # Build
 
