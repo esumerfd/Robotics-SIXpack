@@ -17,6 +17,7 @@ simple `make` solution using the arduino-cli to build and upload.
 # Install - Mac only.
 
 * brew install arduino-cli
+* make init
 
 # Build
 
@@ -28,11 +29,11 @@ The build step uses installs the packages and runs the arduino-cli compile to ge
 
 You will have work out the the serial port to upload to. Once you have plugged it in, you should see it in this list
 
-* ioreg -p IOUSB 
+* make usb
 
 Then you can upload the built solution:
 
-* SERIAL_PORT=/dev/cu.usbserial-OR_SOMETHING make upload
+* SERIAL_PORT=/dev/cu.usbserial-OR-SOMETHING make upload
 
  
 
