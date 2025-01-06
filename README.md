@@ -5,7 +5,7 @@ A free Robotics hexapod by delta3robotics.
 * https://wonderl.ink/@delta3robotics
 * https://cults3d.com/de/modell-3d/verschiedene/sixpack
 
-Chris wrote all the original code and hosts a Discord to help people learn about robotits.
+Chris wrote all the original code and hosts a Discord to help people learn about robotics.
 
 * https://discord.com/invite/fj6HPAsYT8
 
