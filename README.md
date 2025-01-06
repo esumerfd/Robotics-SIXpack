@@ -22,13 +22,13 @@ simple `make` solution using the arduino-cli to build and upload.
 
 # Build
 
-The build step uses installs the packages and runs the arduino-cli compile to generate the image
+The build step installs the packages and runs the arduino-cli compile to generate the image
 
 * make build
 
 # Upload
 
-You will have work out the the serial port to upload to. Once you have plugged it in, you should see it in this list
+You will have to work out the serial port to upload to. Once you have plugged it in, you should see it in this list
 
 * make usb
 
