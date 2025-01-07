@@ -44,7 +44,7 @@ RS-232 comms. The communication between the computer and the esp32-cam requires 
 
 * https://www.amazon.com/gp/product/B07WYLK437
 
-If you are interested in the baround of RS-232 and how it works at the link level this is a good article.
+If you are interested in the backround of RS-232 and how it works at the link level this is a good article.
 
 * [MacOS Big Sur & RS-232 Serial Communications](https://just.graphica.com.au/tips/macos-big-sur-rs232/)
 
