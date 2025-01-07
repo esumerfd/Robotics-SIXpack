@@ -38,5 +38,23 @@ Then you can upload the built solution:
 
  
 
+# References
+
+RS-232 comms. The communication between the computer and the esp32-cam requires a usb to serial connection that is achieved with a device driver and a chip of some kind. A common solution is the FTDI FT232RL chip mounted on a board. You can get a couple from Amazon:
+
+* https://www.amazon.com/gp/product/B07WYLK437
+
+If you are interested in the baround of RS-232 and how it works at the link level this is a good article.
+
+* [MacOS Big Sur & RS-232 Serial Communications](https://just.graphica.com.au/tips/macos-big-sur-rs232/)
+
+Optional alternative USB -> Serial driver:
+
+* [Prolific PL2303GT](https://www.prolific.com.tw/us/ShowProduct.aspx?pcid=41&showlevel=0017-0037-0041)
 
 
+## Mac FTDI Story
+
+When I first started this project everything work, the ftdi drivers installed and everything worked. Then I got a new mac i9 chip, running OSX 15, and nothing worted anymore.
+
+TBD...
