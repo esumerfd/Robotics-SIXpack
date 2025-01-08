@@ -52,6 +52,12 @@ Optional alternative USB -> Serial driver:
 
 * [Prolific PL2303GT](https://www.prolific.com.tw/us/ShowProduct.aspx?pcid=41&showlevel=0017-0037-0041)
 
+Attempting connections with PL2303GT chip:
+
+* [Aideepen USB to TTL RS232 3.3V Serial Download Cable Adapter Original 6PIN 5V FTDI-232 Module 1M Wire AVR ARM(Combined Head)](https://www.amazon.com/gp/product/B07FVMCPMT)
+* [HiLetgo 5pcs USB to Serial USB to TTL CH340 Module with STC Microcontroller Download Adapter](amazon.com/gp/product/B00LZV1G6K)
+* [PL2303GT USB to RS232 Serial Cable - UART Upgrade Download Module for RS232 Level (Non-TTL)](https://www.amazon.com/dp/B0D3CFX4PC)
+
 
 ## Mac FTDI Story
 
