@@ -17,8 +17,10 @@ simple `make` solution using the arduino-cli to build and upload.
 # Install - Mac only.
 
 * brew install arduino-cli
+* USB to Serial
+    * Macs older than Maverics need these drivers, but new are good to go.
+        * Install FTDI drivers: https://ftdichip.com
 * make init
-* Install FTDI drivers: https://ftdichip.com
 
 # Build
 

@@ -23,7 +23,7 @@ dependencies:
 
 build:
 	@cd $(PROJECT) \
-		&& arduino-cli compile  --fqbn $(FQBN) --libraries libraries .
+		&& arduino-cli compile --fqbn $(FQBN) --libraries libraries .
 
 upload:
 ifeq ($(SELECTED_SERIAL_PORT),notset)
