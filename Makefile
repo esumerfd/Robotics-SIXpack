@@ -23,14 +23,14 @@ dependencies:
 
 build:
 	@cd $(PROJECT) \
-		&& arduino-cli compile --fqbn $(FQBN) --libraries libraries .
+		&& arduino-cli compile --build-path gen --fqbn $(FQBN) --libraries libraries .
 
 upload:
 ifeq ($(SELECTED_SERIAL_PORT),notset)
 	@echo "Pass in serial port: SERIAL_PORT=xxx make upload"
 else
 	@cd $(PROJECT) \
-		&& arduino-cli upload -p $(SELECTED_SERIAL_PORT) --fqbn $(FQBN) .
+		&& arduino-cli upload --build-path gen --port $(SELECTED_SERIAL_PORT) --fqbn $(FQBN) .
 endif
 
 usb:
