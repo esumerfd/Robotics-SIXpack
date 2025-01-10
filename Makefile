@@ -30,7 +30,7 @@ ifeq ($(SELECTED_SERIAL_PORT),notset)
 	@echo "Pass in serial port: SERIAL_PORT=xxx make upload"
 else
 	@cd $(PROJECT) \
-		&& arduino-cli upload --build-path gen --port $(SELECTED_SERIAL_PORT) --fqbn $(FQBN) .
+		&& arduino-cli upload --verbose --build-path gen --port $(SELECTED_SERIAL_PORT) --fqbn $(FQBN) .
 endif
 
 usb:
