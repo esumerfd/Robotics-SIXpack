@@ -68,6 +68,9 @@ int korr = 25; //0for calibration 25 for usage
 
 
 //Compensation values to calibrate the servos
+// Startup servos set to 90deg. Freq of servo 800-2200, so 90deg is 1800Hz.
+// So, hookup your servo tester, set the Hz to 1800Hz and estimate the degress to correct to 90.
+// Positive is counter-clockwise.
 int comp0=5;
 int comp1=0;
 int comp2=-3;
