@@ -71,14 +71,14 @@ int korr = 25; //0for calibration 25 for usage
 // Startup servos set to 90deg. Freq of servo 800-2200, so 90deg is 1800Hz.
 // So, hookup your servo tester, set the Hz to 1800Hz and estimate the degress to correct to 90.
 // Positive is counter-clockwise.
-int comp0=5;
+int comp0=0;
 int comp1=0;
-int comp2=-3;
-int comp3=-5;
-int comp4=-8;
-int comp5=-10;
-int comp6=-8;
-int comp7=-5;
+int comp2=0;
+int comp3=0;
+int comp4=0;
+int comp5=0;
+int comp6=0;
+int comp7=0;
 int comp8=0;
 int comp9=0;
 int comp10=0;
