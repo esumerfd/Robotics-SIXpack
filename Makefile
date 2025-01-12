@@ -2,7 +2,7 @@
 SELECTED_SERIAL_PORT=$(if $(SERIAL_PORT), $(SERIAL_PORT),notset)
 
 FQBN=esp32:esp32:esp32cam
-PROJECT=Firmware/SIXpackAccesPoint
+PROJECT:=Firmware/SIXpackAccesPoint
 
 default: build
 
@@ -20,6 +20,9 @@ dependencies:
 	@cd $(PROJECT) \
 		&& arduino-cli lib install "Adafruit BusIO" \
 		&& arduino-cli lib install "Adafruit PWM Servo Driver Library"
+
+# make PROJECT=Firmware/SIXpackDebug debug
+debug: build
 
 build:
 	@cd $(PROJECT) \

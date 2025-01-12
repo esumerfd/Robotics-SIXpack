@@ -1,0 +1,531 @@
+<html>
+  <head>
+    <title>delta3Robotics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      :root{
+        --back: #858080;
+        --backLog: darkgrey;
+        --activeData: purple;
+        --font: black;
+        --BtnBackground: gray;
+        --btnBorder: black;
+        --BtnBackgroundDis: rgb(87, 86, 86);
+        --BtnLegAct: purple; 
+      }
+      body { 
+        font-family: Arial; 
+        text-align: center; 
+        background-color: var(--back);
+        position: absolute;
+        margin: 0px;
+        overflow: hidden;
+        top: 0px;
+        bottom: 0px;
+        width: 100%;
+        height: 100%;
+    }
+      table { 
+        margin-left: 0%; 
+        margin-right: 0px; 
+    }
+
+      td { 
+        padding:  1px; 
+        align-items:"center";
+    }
+
+    .log {
+        color: var(--activeData);
+        font-size: 13px;
+        text-align: left;
+        margin-left: 5px;
+    }
+    .var {
+        color: var(--font);
+        font-size: 13px;
+        text-align: left;
+        margin-left: 5px;
+    }
+
+    .height{
+      color: var(--activeData);
+      font-size: 17px;
+      text-align: left;
+      margin-left: 5px;
+    }
+
+      .button {
+        color: var(--font);
+        background-color: var(--BtnBackground);
+        border: solid;
+        border-color: var(--btnBorder);
+        border-radius: 100%;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+        cursor: pointer;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+      }
+      .button:active {
+        border-color: var(--activeData);
+      }
+
+      .buttonDisabled {
+        color: black;
+        background-color: var(--back);
+        border: none;
+        border-radius: 100%;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+        cursor: pointer;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+      }
+      .buttondisabled:active {
+        background-color: var(--back);
+      }
+
+      .buttonLeg {
+        color: var(--font);
+        background-color: var(--BtnLegAct);
+        border: solid;
+        border-radius: 100%;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+        cursor: pointer;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+      }
+      .buttonLeg:active {
+        background-color: var(--activeData);
+      }
+
+    .containerA {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        grid-template-columns: [col0] 20% [col1] 60% [col2] 20% [col3];
+        grid-template-rows: [row0] 10% [row1] 20% [row2] 35% [row3] 30% [row4]; 
+        column-gap: 5px;
+        row-gap: 5px;   
+        justify-self: start;
+        align-self: start;
+        justify-items: center;
+        align-items: center;
+    }
+
+    .item-info1 {
+        padding-left: 10px;
+        grid-column-start: col0;
+        grid-column-end: col1;
+        grid-row-start: row0;
+        grid-row-end: row2;
+        justify-self: stretch;
+        align-self: stretch;
+        line-height: 40%;
+        justify-content: left;
+    }
+
+    .item-info2 {
+        grid-column-start: col0;
+        grid-column-end: col1;
+        grid-row-start: row2;
+        grid-row-end: row3;
+        align-self: stretch;
+        justify-self: stretch;
+        line-height: 40%;
+        align-items: center;
+        justify-items: center;
+    }  
+    
+    .item-bt1 {
+        grid-column-start: col0;
+        grid-column-end: col1;
+        grid-row-start: row3;
+        grid-row-end: row4;
+    }
+
+    .item-heading {
+        grid-column-start: col1;
+        grid-column-end: col2;
+        grid-row-start: row0;
+        grid-row-end: row1;
+        justify-self: center;
+        align-self: center;
+    }
+
+    .item-stream {
+        grid-column-start: col1;
+        grid-column-end: col2;
+        grid-row-start: row1;
+        grid-row-end: row4;
+        justify-self: stretch;
+        align-self: stretch;
+        
+    }
+    .item-bt3 {
+        grid-column-start: col2;
+        grid-column-end: col3;
+        grid-row-start: row0;
+        grid-row-end: row2;
+
+    }
+    .item-info3 {
+        grid-column-start: col2;
+        grid-column-end: col3;
+        grid-row-start: row2;
+        grid-row-end: row3;
+
+    }
+    .item-bt2 {
+        grid-column-start: col2;
+        grid-column-end: col3;
+        grid-row-start: row3;
+        grid-row-end: row4;
+    }
+
+    .containerB {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        grid-template-columns: [col0] 20% [col1] 60% [col2] 20% [col3];
+        grid-template-rows: [row0] 10% [row1] 20% [row2] 35% [row3] 30% [row4]; 
+        column-gap: 5px;
+        row-gap: 5px;   
+        justify-self: start;
+        align-self: start;
+        justify-items: center;
+        align-items: center;
+    }
+    .item-FL {
+        grid-column-start: col0;
+        grid-column-end: col1;
+        grid-row-start: row0;
+        grid-row-end: row2;
+    }
+    .item-FR {
+        grid-column-start: col2;
+        grid-column-end: col3;
+        grid-row-start: row0;
+        grid-row-end: row2;
+    }
+    .item-Height {
+        grid-column-start: col1;
+        grid-column-end: col2;
+        grid-row-start: row1;
+        grid-row-end: row4;
+        justify-self: center;
+        align-self: center;  
+    }
+    .item-BL {
+        grid-column-start: col0;
+        grid-column-end: col1;
+        grid-row-start: row3;
+        grid-row-end: row4;
+    }
+    .item-BR {
+        grid-column-start: col2;
+        grid-column-end: col3;
+        grid-row-start: row3;
+        grid-row-end: row4;
+    }
+    img {  
+      width: 100%;
+      align-self: stretch;
+    }
+
+
+    </style>
+  </head>
+  <body>
+    <div class="containerA">
+        <div class="item-info1">
+          <div><h1 class=log id="Row11" ></h1></div>
+          <div><h1 class=log id="Row10" ></h1></div>
+          <div><h1 class=log id="Row9" ></h1></div>
+          <div><h1 class=log id="Row8" ></h1></div>
+          <div><h1 class=log id="Row7" ></h1></div>
+          <div><h1 class=log id="Row6" ></h1></div>
+          <div><h1 class=log id="Row5" ></h1></div>
+          <div><h1 class=log id="Row4" ></h1></div>
+          <div><h1 class=log id="Row3" ></h1></div>
+          <div><h1 class=log id="Row2" ></h1></div>
+          <div><h1 class=log id="Row1" ></h1></div>
+          <div><h1 class=log id="Row0" ></h1></div>
+        </div>
+        <div calss="item-info2">
+          <table>
+            <tr>
+              <td><h1 class="var" ></h1></td><td><h1 class="log" id="logTemp"></h1></td><td><h1 class="var" ></h1></td>
+            </tr>
+            <tr>
+              <td><h1 class="var" ></h1></td><td><h1 class="log" id="logRotX"></h1></td><td><h1 class="var"></h1></td>
+            </tr>
+            <tr>
+              <td><h1 class="var" ></h1></td><td><h1 class="log" id="logRotY"></h1></td><td><h1 class="var"></h1></td>
+            </tr>
+            <tr>
+              <td><h1 class="var" ></h1></td><td><h1 class="log" id="logRotZ"></h1></td><td><h1 class="var"></h1></td>
+            </tr>
+            <tr>
+              <td><h1 class="var" ></h1></td><td><h1 class="log" id="logDistFr"></h1></td><td><h1 class="var"></h1></td>
+            </tr>
+            <tr>
+              <td><h1 class="var" ></h1></td><td><h1 class="log" id="logDistFrL"></h1></td><td><h1 class="var"></h1></td>
+            </tr>
+            <tr>
+              <td><h1 class="var" ></h1></td><td><h1 class="log" id="logDistFrR"></h1></td><td><h1 class="var"></h1></td>
+            </tr>
+            <tr>
+              <td><h1 class="var" ></h1></td><td><h1 class="log" id="logDistBot"></h1></td><td><h1 class="var"></h1></td>
+            </tr>
+          </table>
+        </div>
+        <div class="item-bt1">
+            <table>
+                <tr>
+                  <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('A');" ontouchend="toggleCheckbox('d');"></button></td>
+                  <td><button class="button" ontouchstart="toggleCheckbox('W');" ontouchend="toggleCheckbox('w');">W</button></td>
+                  <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('D');" ontouchend="toggleCheckbox('d');"></button></td></tr>
+                </tr>
+                <tr>
+                  <td><button class="button" ontouchstart="toggleCheckbox('TL');" ontouchend="toggleCheckbox('tl');">TL</button></td>
+                  <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('');" ontouchend="toggleCheckbox('');" style="background-color: gray;"></button></td>
+                  <td><button class="button" ontouchstart="toggleCheckbox('TR');" ontouchend="toggleCheckbox('tl');">TR</button></td>
+                <tr>
+                  <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('');" ontouchend="toggleCheckbox('');"></button></td>
+                  <td><button class="button" ontouchstart="toggleCheckbox('S');" ontouchend="toggleCheckbox('w');">S</button></td>
+                  <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('');" ontouchend="toggleCheckbox('');"></button></td>
+                </tr>                   
+            </table>
+        </div>
+        <div class="item-heading" style="font-size: 60px" >delta3Robotics</div>
+        <div class="item-stream" >
+            <img src="" id="photo" >
+        </div>
+        <div class="item-bt3">
+            <table>    
+                <tr>
+                  <td><button id="wave" class="button" ontouchstart="toggleCheckbox('WAVE');" ontouchend="toggleCheckbox('wave');" >wave</button></td>
+                  <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('');" ontouchend="toggleCheckbox('');"></button></td>
+                  <td><button id="ARM" class="button" onclick="toggleCheckbox('ARM');" >ARM</button></td>
+                </tr>
+                <tr>
+                  <td><button id="LIGHT" class="button" ontouchstart="toggleCheckbox('LIGHT'); toggleLIGHT();" style="font-size: 15px;" >LIGHT</button></td>
+                  <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('');" ontouchend="toggleCheckbox('');"></button></td>
+                  <td><button id="HEIGHT" class="button" ontouchstart="toggleCheckbox('HEIGHT');" style="font-size: 11px;" >HEIGHT</button></td>
+                </tr>
+                <tr>
+                  <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('HORN');" ontouchend="toggleCheckbox('horn');" style="font-size: 15px;"></button></td>
+                  <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('');" ontouchend="toggleCheckbox('');"></button></td>
+                  <td><button id="MODE" class="buttonDisabled" ontouchstart="toggleCheckbox('MODE');"style="font-size: 13px;" ></button></td>
+                </tr>
+            </table>
+        </div>
+        <div class="item-info3">
+          <div class="containerB">
+            <div class="item-FL">
+              <button class="buttonDisabled" id="FrontLeft"></button>
+            </div>
+            <div class="item-FR">
+              <button class="buttonDisabled" id="FrontRight"></button>
+            </div>
+            <div class="item-Height">
+              <h1 class="height" id="height" >Height 1</h1>
+            </div>
+            <div class="item-BL">
+              <button class="buttonDisabled" id="BackLeft"></button>
+            </div>
+            <div class="item-BR">
+              <button class="buttonDisabled" id="BackRight"></button>
+            </div>
+          </div>
+        </div>
+        <div class="item-bt2">
+          <table>    
+            <tr>
+              <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('');" ontouchend="toggleCheckbox('');"></button></td>
+              <td><button class="button" ontouchstart="toggleCheckbox('U');" ontouchend="toggleCheckbox('u');">U</button></td>
+              <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('');" ontouchend="toggleCheckbox('');"></button></td>
+            </tr>
+            <tr>
+              <td><button class="button" ontouchstart="toggleCheckbox('L');" ontouchend="toggleCheckbox('r');">L</button></td>
+              <td><button class="button" ontouchstart="toggleCheckbox('RSTR');">RST</button></td>
+              <td><button class="button" ontouchstart="toggleCheckbox('R');" ontouchend="toggleCheckbox('r');">R</button></td>
+            </tr>
+            <tr>
+              <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('');" ontouchend="toggleCheckbox('');"></button></td>
+              <td><button class="button" ontouchstart="toggleCheckbox('DO');" ontouchend="toggleCheckbox('u');">D</button></td>
+              <td><button class="buttonDisabled" ontouchstart="toggleCheckbox('');" ontouchend="toggleCheckbox('');"></button></td>
+            </tr>
+        </table>
+        </div>
+    </div>
+
+   <script>
+    
+   function toggleCheckbox(x) {
+     var xhr = new XMLHttpRequest();
+     xhr.open("GET", "/action?go=" + x, true);
+      xhr.onload = function() {
+        if (xhr.status == 200 && xhr.responseText !== "") {
+          var Row0 = document.getElementById("Row0");
+          var Row1 = document.getElementById("Row1");
+          var Row2 = document.getElementById("Row2");
+          var Row3 = document.getElementById("Row3");
+          var Row4 = document.getElementById("Row4");
+          var Row5 = document.getElementById("Row5");
+          var Row6 = document.getElementById("Row6");
+          var Row7 = document.getElementById("Row7");
+          var Row8 = document.getElementById("Row8");
+          var Row9 = document.getElementById("Row9");
+          var Row10 = document.getElementById("Row10");
+          var Row11 = document.getElementById("Row11");
+          Row11.innerText = Row10.innerText;
+          Row10.innerText = Row9.innerText;
+          Row9.innerText = Row8.innerText;
+          Row8.innerText = Row7.innerText;
+          Row7.innerText = Row6.innerText;
+          Row6.innerText = Row5.innerText;
+          Row5.innerText = Row4.innerText;
+          Row4.innerText = Row3.innerText;
+          Row3.innerText = Row2.innerText;
+          Row2.innerText = Row1.innerText;
+          Row1.innerText = Row0.innerText;
+          Row0.innerText = xhr.responseText;
+        } 
+      };
+     xhr.send();
+   }
+
+
+let timer = setInterval(getFeedBack, 200);
+function getFeedBack() {
+  var xhfr = new XMLHttpRequest();
+    xhfr.open("GET", "/action?go=" + "feedBack", true);
+      xhfr.onload = function(){
+        if (xhfr.status == 200){
+          var text = xhfr.responseText;
+          var textarray = text.split(",");
+          var lightBtn = document.getElementById("LIGHT");
+            if(textarray[0]=="1000"){
+              lightBtn.style.backgroundColor= "gray";
+            }
+            if(textarray[0]=="1500"){
+              lightBtn.style.backgroundColor= "purple";
+            }
+            if(textarray[0]=="2000"){
+              lightBtn.style.backgroundColor= "green";
+            }
+          var armedBtn = document.getElementById("ARM");
+            if(textarray[1]=="1000"){
+              armedBtn.style.backgroundColor= "gray";
+            }
+            if(textarray[1]=="2000"){
+              armedBtn.style.backgroundColor= "purple";
+            }
+          var heightLog = document.getElementById("height");
+          var heightBtn = document.getElementById("HEIGHT");
+            if(textarray[2]=="1000"){
+              heightLog.innerText = "Height 1";
+              heightBtn.style.backgroundColor= "gray";
+            }
+            if(textarray[2]=="1500"){
+              heightLog.innerText = "Height 2";
+              heightBtn.style.backgroundColor= "purple";
+            }
+            if(textarray[2]=="2000"){
+              heightLog.innerText = "Height 3";
+              heightBtn.style.backgroundColor= "green";
+            }
+          var modeBtn = document.getElementById("MODE");
+            if(textarray[3]=="1000"){
+              modeBtn.style.backgroundColor= "gray";
+            }
+            if(textarray[3]=="1500"){
+              modeBtn.style.backgroundColor= "purple";
+            }
+            if(textarray[3]=="2000"){
+              modeBtn.style.backgroundColor= "green";
+            }
+          var legFLBtn = document.getElementById("FrontLeft");
+            if(textarray[4]=="1000"){
+              legFLBtn.style.backgroundColor= "gray";
+            }
+            if(textarray[4]=="2000"){
+              legFLBtn.style.backgroundColor= "purple";
+            }
+          var legFRBtn = document.getElementById("FrontRight");
+            if(textarray[5]=="1000"){
+              legFRBtn.style.backgroundColor= "gray";
+            }
+            if(textarray[5]=="2000"){
+              legFRBtn.style.backgroundColor= "purple";
+            }
+          var legBLBtn = document.getElementById("BackLeft");
+            if(textarray[6]=="1000"){
+              legBLBtn.style.backgroundColor= "gray";
+            }
+            if(textarray[6]=="2000"){
+              legBLBtn.style.backgroundColor= "purple";
+            }
+          var legBRBtn = document.getElementById("BackRight");
+            if(textarray[7]=="1000"){
+              legBRBtn.style.backgroundColor= "gray";
+            }
+            if(textarray[7]=="2000"){
+              legBRBtn.style.backgroundColor= "purple";
+            }
+          var logTempTxt = document.getElementById("logTemp");
+            logTempTxt.innerText=textarray[8];
+          var logRotXTxt = document.getElementById("logRotX");
+            logRotXTxt.innerText=textarray[9];
+          var logRotYTxt = document.getElementById("logRotY");
+            logRotYTxt.innerText=textarray[10];
+          var logRotZTxt = document.getElementById("logRotZ");
+            logRotZTxt.innerText=textarray[11];
+          var logDistFrTxt = document.getElementById("logDistFr");
+            logDistFrTxt.innerText=textarray[12];
+          var logDistFrLTxt = document.getElementById("logDistFrL");
+            logDistFrLTxt.innerText=textarray[13];
+          var logDistFrRTxt = document.getElementById("logDistFrR");
+            logDistFrRTxt.innerText=textarray[14];
+          var logDistBotTxt = document.getElementById("logDistBot");
+            logDistBotTxt.innerText=textarray[15];       
+        }
+    };
+    xhfr.send();
+}
+window.onload = document.getElementById("photo").src = window.location.href.slice(0, -1) + ":81/stream";
+  </script>
+  </body>
+</html>
+)

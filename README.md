@@ -38,17 +38,23 @@ Then you can upload the built solution:
 
 * SERIAL_PORT=/dev/cu.usbserial-OR-SOMETHING make upload
 
+# Debugging
+
+Trying to create an independent module that can be used to verify the hardware is functioning as expected. A website contains options to testing each component.
+
+* make PROJECT=Firmware/SIXpackDebug build
+
 # References
 
 RS-232 comms. The communication between the computer and the esp32-cam requires a usb to serial connection that is achieved with a device driver and a chip of some kind. A common solution is the FTDI FT232RL chip mounted on a board. You can get a couple from Amazon:
 
-* https://www.amazon.com/gp/product/B07WYLK437
+* [Amazon FTDI component](https://www.amazon.com/gp/product/B07WYLK437)
 
 If you are interested in the backround of RS-232 and how it works at the link level this is a good article.
 
 * [MacOS Big Sur & RS-232 Serial Communications](https://just.graphica.com.au/tips/macos-big-sur-rs232/)
 
-Ultimatly you don't need any additional serial drivers since Mac OSX includes its own in versions 11 onwards. I am testing on Serquoia, 15 and it works.
+Ultimatly you don't need any additional serial drivers since Mac OSX includes its own in versions 11 onwards. I am testing on Serquoia 15 and it works.
 
 Optional alternative USB -> Serial driver:
 
