@@ -1,20 +1,20 @@
 #include "Arduino.h"
 #include <flash.h>
 #include <logging.h>
-#include <servo.h>
+#include <pwm_servo.h>
 
 void setup() {
   Log::begin();
   Log::println("SIXpack Debug");
 
-  Servo::begin();
+  PWMServo::begin();
 }
 
 void loop() {
-  Servo::move();
+  PWMServo::move();
 
   Flash::flash();
 
-  delay(10);
+  delay(100);
 }
 
