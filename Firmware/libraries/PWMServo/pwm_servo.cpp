@@ -4,13 +4,10 @@
 static Adafruit_PWMServoDriver pwm;
 
 void PWMServo::begin() {
-  /* begin(new ServerMotionRandom()) */
-/* } */
+  PWMServo::begin(new ServoMotionRandom());
+}
 
-/* static void begin(ServerMotionRandom *mover) { */
-
-  ServerMotionRandom *mover = new ServerMotionRandom();
-
+void PWMServo::begin(ServoMotionRandom *mover) {
   pwm = Adafruit_PWMServoDriver();
 
   pwm.begin();

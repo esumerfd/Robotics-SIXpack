@@ -1,11 +1,11 @@
 #include <servo_motion.h>
 #include <pwm_servo.h>
 
-ServerMotionRandom::ServerMotionRandom() {
+ServoMotionRandom::ServoMotionRandom() {
   /* srand(); */
 }
 
-void ServerMotionRandom::move(PWMServo servo) {
+void ServoMotionRandom::move(PWMServo *servo) {
   // rand()
-  servo.move();
+  servo->move();
 };

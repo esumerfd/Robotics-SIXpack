@@ -1,6 +1,8 @@
 #ifndef SERVO_MOTION_H
 #define SERVO_MOTION_H
 
+class PWMServo;
+
 #include <pwm_servo.h>
 
 /*
@@ -10,13 +12,13 @@
  */
 class ServoMotion {
   public:
-    virtual void move(PWMServo servo);
+    virtual void move(PWMServo *servo);
 };
 
-class ServerMotionRandom : public ServoMotion {
+class ServoMotionRandom : public ServoMotion {
   public:
-    ServerMotionRandom();
-    void move(PWMServo servo);
+    ServoMotionRandom();
+    void move(PWMServo *servo);
 };
 
 #endif
