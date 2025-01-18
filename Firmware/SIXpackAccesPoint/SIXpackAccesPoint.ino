@@ -12,7 +12,7 @@
 
 // Credential for the Wifi access point
 //feel free to change that
-const char* ssid = "SIXpackEds";
+const char* ssid = "SIXpackOrig";
 const char* password = "aaaaaaaa";
 //Instatntiation of communication variables, this was made for Alpha 
 //most of them are not used for ESPiderman and can be deleted carefully
@@ -68,17 +68,14 @@ int korr = 25; //0for calibration 25 for usage
 
 
 //Compensation values to calibrate the servos
-// Startup servos set to 90deg. Freq of servo 800-2200, so 90deg is 1800Hz.
-// So, hookup your servo tester, set the Hz to 1800Hz and estimate the degress to correct to 90.
-// Positive is counter-clockwise.
-int comp0=0;
+int comp0=5;
 int comp1=0;
-int comp2=0;
-int comp3=0;
-int comp4=0;
-int comp5=0;
-int comp6=0;
-int comp7=0;
+int comp2=-3;
+int comp3=-5;
+int comp4=-8;
+int comp5=-10;
+int comp6=-8;
+int comp7=-5;
 int comp8=0;
 int comp9=0;
 int comp10=0;
@@ -766,7 +763,6 @@ window.onload = document.getElementById("photo").src = window.location.href.slic
   </body>
 </html>
 )rawliteral";
-
 //Instatiation of different HTTP hander
 static esp_err_t index_handler(httpd_req_t *req){
   httpd_resp_set_type(req, "text/html");
@@ -832,11 +828,11 @@ static esp_err_t stream_handler(httpd_req_t *req){
   return res;
 }
 
-static esp_err_t cmd_handler(httpd_req_t *req) {
+static esp_err_t cmd_handler(httpd_req_t *req){
   char*  buf;
   size_t buf_len;
   char variable[70] = {0,};
-
+  
   buf_len = httpd_req_get_url_query_len(req) + 1;
   if (buf_len > 1) {
     buf = (char*)malloc(buf_len);
@@ -870,219 +866,219 @@ static esp_err_t cmd_handler(httpd_req_t *req) {
 
   int res = 0;
 
-  //the following parts are used to process the incomming data and pack the communication
-  //which is send back to the client. variable is a char which is different for all Buttons 
-  //on client side. It is send at the end of the URL. 
-  //feedBack #############################
-  if(!strcmp(variable,"feedBack")){
-    strcpy(variable,dataToClient);
+//the following parts are used to process the incomming data and pack the communication
+//which is send back to the client. variable is a char which is different for all Buttons 
+//on client side. It is send at the end of the URL. 
+//feedBack #############################
+if(!strcmp(variable,"feedBack")){
+  strcpy(variable,dataToClient);
+}
+//LIGHT#################################
+if(!strcmp(variable,"LIGHT")){
+  if(lightOn==false){
+  lightOn=true;
+  strcpy(variable,"Light switched on");
+  light="1500";
   }
-  //LIGHT#################################
-  if(!strcmp(variable,"LIGHT")){
-    if(lightOn==false){
-      lightOn=true;
-      strcpy(variable,"Light switched on");
-      light="1500";
-    }
+}
+if(!strcmp(variable,"LIGHT")){
+  if(lightOn==true){
+  lightOn=false;
+  strcpy(variable,"Light switched off");
+  light="1000";
   }
-  if(!strcmp(variable,"LIGHT")){
-    if(lightOn==true){
-      lightOn=false;
-      strcpy(variable,"Light switched off");
-      light="1000";
-    }
+}
+//###################################################
+//Channel 1 W/S #####################################
+if(!strcmp(variable,"W")){
+  ch_1=2000;
+  strcpy(variable,"");
+}
+if(!strcmp(variable,"w")){
+  ch_1=1500;
+  strcpy(variable,"");
+}
+if(!strcmp(variable,"S")){
+  ch_1=1000;
+  strcpy(variable,"");
+}
+//###################################################
+//Channel 2 L/R #####################################
+if(!strcmp(variable,"R")){
+  if(ch_2<=1724){
+    ch_2=ch_2+25;
   }
-  //###################################################
-  //Channel 1 W/S #####################################
-  if(!strcmp(variable,"W")){
-    ch_1=2000;
-    strcpy(variable,"");
+  else{
+    ch_2=1749;
   }
-  if(!strcmp(variable,"w")){
-    ch_1=1500;
-    strcpy(variable,"");
+strcpy(variable,"");
+}
+if(!strcmp(variable,"L")){
+  if(ch_2>=1276){
+    ch_2=ch_2-25;
   }
-  if(!strcmp(variable,"S")){
-    ch_1=1000;
-    strcpy(variable,"");
+  else{
+    ch_2=1251;
   }
-  //###################################################
-  //Channel 2 L/R #####################################
-  if(!strcmp(variable,"R")){
-    if(ch_2<=1724){
-      ch_2=ch_2+25;
-    }
-    else{
-      ch_2=1749;
-    }
-    strcpy(variable,"");
+strcpy(variable,"");
+}
+if(!strcmp(variable,"TL")){
+  ch_2=1000;
+  strcpy(variable,"");
+}
+if(!strcmp(variable,"TR")){
+  ch_2=2000;
+  strcpy(variable,"");
+}
+if(!strcmp(variable,"tl")){
+  ch_2=1500;
+  strcpy(variable,"");
+}
+if(!strcmp(variable,"r")){
+  strcpy(variable,"");
+}
+//###################################################
+//Channel 3 U/D #####################################
+if(!strcmp(variable,"U")){
+  if(ch_3<=1998){
+    ch_3=ch_3+50;
   }
-  if(!strcmp(variable,"L")){
-    if(ch_2>=1276){
-      ch_2=ch_2-25;
-    }
-    else{
-      ch_2=1251;
-    }
-    strcpy(variable,"");
+  else{
+    ch_3=2000;
   }
-  if(!strcmp(variable,"TL")){
-    ch_2=1000;
-    strcpy(variable,"");
+strcpy(variable,"");
+}
+if(!strcmp(variable,"DO")){
+  if(ch_3>=1002){
+    ch_3=ch_3-50;
   }
-  if(!strcmp(variable,"TR")){
-    ch_2=2000;
-    strcpy(variable,"");
+  else{
+    ch_3=1000;
   }
-  if(!strcmp(variable,"tl")){
-    ch_2=1500;
-    strcpy(variable,"");
-  }
-  if(!strcmp(variable,"r")){
-    strcpy(variable,"");
-  }
-  //###################################################
-  //Channel 3 U/D #####################################
-  if(!strcmp(variable,"U")){
-    if(ch_3<=1998){
-      ch_3=ch_3+50;
-    }
-    else{
-      ch_3=2000;
-    }
-    strcpy(variable,"");
-  }
-  if(!strcmp(variable,"DO")){
-    if(ch_3>=1002){
-      ch_3=ch_3-50;
-    }
-    else{
-      ch_3=1000;
-    }
-    strcpy(variable,"");
-  }
-  if(!strcmp(variable,"u")){
-    strcpy(variable,"");
-  }
-  //###################################################
-  //Reset for Ch_2 and Ch_3 ###########################
-  if(!strcmp(variable,"RSTR")){
-    ch_2=1500;
-    ch_3=1500;
-    strcpy(variable,"Reset View");
-  }
-  //###################################################
+  strcpy(variable,"");
+}
+if(!strcmp(variable,"u")){
+  strcpy(variable,"");
+}
+//###################################################
+//Reset for Ch_2 and Ch_3 ###########################
+if(!strcmp(variable,"RSTR")){
+  ch_2=1500;
+  ch_3=1500;
+  strcpy(variable,"Reset View");
+}
+//###################################################
 
-  //Channel 4 A/D #####################################
-  if(!strcmp(variable,"D")){
-    ch_4=2000;
-    strcpy(variable,"");
+//Channel 4 A/D #####################################
+if(!strcmp(variable,"D")){
+  ch_4=2000;
+  strcpy(variable,"");
+}
+if(!strcmp(variable,"d")){
+  ch_4=1500;
+  strcpy(variable,"");
+}
+if(!strcmp(variable,"A")){
+  ch_4=1000;
+  strcpy(variable,"");
+}
+//###################################################
+//Channel 5 ARM #####################################
+if(!strcmp(variable,"ARM")){
+  if(arm==true){
+    ch_5=1000;
+    strcpy(variable,"Robot disarmed");
+    arm=false;
+    armed="1000";
   }
-  if(!strcmp(variable,"d")){
-    ch_4=1500;
-    strcpy(variable,"");
+}
+if(!strcmp(variable,"ARM")){
+  if(arm==false){
+    ch_5=2000;
+    strcpy(variable,"Robot armed");
+    arm=true;
+    armed="2000";
   }
-  if(!strcmp(variable,"A")){
-    ch_4=1000;
-    strcpy(variable,"");
+}
+//###################################################
+//Channel 6 HORN ####################################
+if(!strcmp(variable,"HORN")){
+  ch_6=2000;
+  strcpy(variable,"");
+}
+if(!strcmp(variable,"horn")){
+  ch_6=1000;
+  strcpy(variable,"");
+}
+//###################################################
+//Channel 7 HEIGHT ##################################
+//transition from HEIGHT1 to HEIGHT2
+if(!strcmp(variable,"HEIGHT")){ 
+  if(ch_7_old==1500 && ch_7==1000){
+    ch_7=1500;
+    ch_7_old=1000;
+  strcpy(variable,"Changed from HEIGHT1 to HEIGHT2");
+  height="1500";
   }
-  //###################################################
-  //Channel 5 ARM #####################################
-  if(!strcmp(variable,"ARM")){
-    if(arm==true){
-      ch_5=1000;
-      strcpy(variable,"Robot disarmed");
-      arm=false;
-      armed="1000";
-    }
+}
+//transition from HEIGHT2 to HEIGHT3
+if(!strcmp(variable,"HEIGHT")){ 
+  if(ch_7_old==1000 && ch_7==1500){
+    ch_7=2000;
+    ch_7_old=1500;
+  strcpy(variable,"Changed from HEIGHT2 to HEIGHT3");
+  height="2000";
   }
-  if(!strcmp(variable,"ARM")){
-    if(arm==false){
-      ch_5=2000;
-      strcpy(variable,"Robot armed");
-      arm=true;
-      armed="2000";
-    }
+}
+//transition from HEIGHT3 to HEIGHT2
+if(!strcmp(variable,"HEIGHT")){ 
+  if(ch_7_old==1500 && ch_7==2000){
+    ch_7=1500;
+    ch_7_old=2000;
+  strcpy(variable,"Changed from HEIGHT3 to HEIGHT2");
+  height="1500";
   }
-  //###################################################
-  //Channel 6 HORN ####################################
-  if(!strcmp(variable,"HORN")){
-    ch_6=2000;
-    strcpy(variable,"");
+}
+//transition from HEIGHT2 to HEIGHT1
+if(!strcmp(variable,"HEIGHT")){ 
+  if(ch_7_old==2000 && ch_7==1500){
+    ch_7=1000;
+    ch_7_old=1500;
+  strcpy(variable,"Changed from HEIGHT2 to HEIGHT1");
+  height="1000";
   }
-  if(!strcmp(variable,"horn")){
-    ch_6=1000;
-    strcpy(variable,"");
+}
+//###################################################
+//Channel 8 MODE ####################################
+if(!strcmp(variable, "MODE")) {
+  ch_8=ch_8+500;
+  if(ch_8>=2001){
+    ch_8=1000;
   }
-  //###################################################
-  //Channel 7 HEIGHT ##################################
-  //transition from HEIGHT1 to HEIGHT2
-  if(!strcmp(variable,"HEIGHT")){ 
-    if(ch_7_old==1500 && ch_7==1000){
-      ch_7=1500;
-      ch_7_old=1000;
-      strcpy(variable,"Changed from HEIGHT1 to HEIGHT2");
-      height="1500";
-    }
+  if (ch_8==1000){
+   strcpy(variable,"MODE set to MANUAL");
+   mode="1000";
   }
-  //transition from HEIGHT2 to HEIGHT3
-  if(!strcmp(variable,"HEIGHT")){ 
-    if(ch_7_old==1000 && ch_7==1500){
-      ch_7=2000;
-      ch_7_old=1500;
-      strcpy(variable,"Changed from HEIGHT2 to HEIGHT3");
-      height="2000";
-    }
+  if (ch_8==1500){
+   strcpy(variable,"MODE set to DANCE");
+   mode="1500";
   }
-  //transition from HEIGHT3 to HEIGHT2
-  if(!strcmp(variable,"HEIGHT")){ 
-    if(ch_7_old==1500 && ch_7==2000){
-      ch_7=1500;
-      ch_7_old=2000;
-      strcpy(variable,"Changed from HEIGHT3 to HEIGHT2");
-      height="1500";
-    }
+  if (ch_8==2000){
+   strcpy(variable,"MODE set to AUTONOMOUS");
+   mode="2000";
   }
-  //transition from HEIGHT2 to HEIGHT1
-  if(!strcmp(variable,"HEIGHT")){ 
-    if(ch_7_old==2000 && ch_7==1500){
-      ch_7=1000;
-      ch_7_old=1500;
-      strcpy(variable,"Changed from HEIGHT2 to HEIGHT1");
-      height="1000";
-    }
-  }
-  //###################################################
-  //Channel 8 MODE ####################################
-  if(!strcmp(variable, "MODE")) {
-    ch_8=ch_8+500;
-    if(ch_8>=2001){
-      ch_8=1000;
-    }
-    if (ch_8==1000){
-      strcpy(variable,"MODE set to MANUAL");
-      mode="1000";
-    }
-    if (ch_8==1500){
-      strcpy(variable,"MODE set to DANCE");
-      mode="1500";
-    }
-    if (ch_8==2000){
-      strcpy(variable,"MODE set to AUTONOMOUS");
-      mode="2000";
-    }
-  }
-  //###################################################
-  //Channel 9 EARS ####################################
-  if(!strcmp(variable, "WAVE")) {
-    wave=true;
-    strcpy(variable,"Waving");
-  }
-  if(!strcmp(variable, "wave")) {
-    wave=false;
-    strcpy(variable,"");
-  }
-  //###################################################
+}
+//###################################################
+//Channel 9 EARS ####################################
+if(!strcmp(variable, "WAVE")) {
+  wave=true;
+  strcpy(variable,"Waving");
+}
+if(!strcmp(variable, "wave")) {
+  wave=false;
+  strcpy(variable,"");
+}
+//###################################################
 
   if(res){
     return httpd_resp_send_500(req);
@@ -1133,7 +1129,7 @@ void setup() {
   pwm.setPWMFreq(1600); 
   pwm.setPWMFreq(60);
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); //disable brownout detector
-                                             //make the built-in LED usable
+  //make the built-in LED usable
   pinMode (LED_BUILTIN, OUTPUT);
   //The serial connection can be used to debug things by printing variables 
   //to the serial monitor, with the current setup you must comment out 
@@ -1143,7 +1139,7 @@ void setup() {
   //have to do this commenting-out-procedure
   Serial.begin(115200);
   Serial.setDebugOutput(false);
-
+  
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
@@ -1165,7 +1161,7 @@ void setup() {
   config.pin_reset = RESET_GPIO_NUM;
   config.xclk_freq_hz = 20000000;
   config.pixel_format = PIXFORMAT_JPEG; 
-
+  
   if(psramFound()){
     config.frame_size = FRAMESIZE_VGA;
     config.jpeg_quality = 10;
@@ -1175,7 +1171,7 @@ void setup() {
     config.jpeg_quality = 12;
     config.fb_count = 1;
   }
-
+  
   // Camera init
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) {
@@ -1184,7 +1180,7 @@ void setup() {
   }
   // Wi-Fi connection
   WiFi.softAP(ssid, password);
-
+  
   // Start streaming web server
   startCameraServer();
 
@@ -1198,8 +1194,8 @@ void loop() {
     digitalWrite(LED_BUILTIN, LOW);
   }
 
-  //here the movment skript starts
-  //arming = activate
+//here the movment skript starts
+//arming = activate
   if(arm==true){
     //select height
     if(height.equals("1000") && ch_1==1500 && ch_2==1500 && wave==false){
@@ -1209,14 +1205,14 @@ void loop() {
       a5=a7=40;
       a9=a11=40-map(ch_3, 1000, 2000, -25, 25);
     }
-    if(height.equals("1500") && ch_1==1500 && ch_2==1500 && wave==false){
+      if(height.equals("1500") && ch_1==1500 && ch_2==1500 && wave==false){
       stepLength = stepLengthMid;
       stepLift = stepLiftMid;
       a1=a3=60+map(ch_3, 1000, 2000, -25, 25);
       a5=a7=60;
       a9=a11=60-map(ch_3, 1000, 2000, -25, 25);
     }
-    if(height.equals("2000") && ch_1==1500 && ch_2==1500 && wave==false){
+      if(height.equals("2000") && ch_1==1500 && ch_2==1500 && wave==false){
       stepLength = stepLengthHigh;
       stepLift = stepLiftHigh;
       a1=a3=90;
@@ -1225,7 +1221,7 @@ void loop() {
         a9=a11=90-(0.5*map(ch_3, 1000, 2000, -40, 40));
       }
     }
-    //stand if not actuated
+//stand if not actuated
     if(ch_1==1500 && ch_2!=2000 && ch_2!=1000 && wave==false){
       v=vFast;
       a0=map(ch_2, 1000, 2000, -85, 85);
@@ -1237,7 +1233,7 @@ void loop() {
       step=0;
 
     }
-    //wave
+//wave
     if(wave==true){
       a3=-85;
       if(a2r==stepLength && a3r==-85){
@@ -1247,7 +1243,7 @@ void loop() {
         a2=stepLength;
       }
     }
-    //Walk forward
+//Walk forward
     if(ch_1>=1600){
       ch_2=1500;
       ch_3=1500;
@@ -1316,7 +1312,7 @@ void loop() {
         step=5;
       }
     }
-    //Walk backwards
+//Walk backwards
     if(ch_1<=1400){
       ch_2=1500;
       ch_3=1500;
@@ -1386,7 +1382,7 @@ void loop() {
       }
     }
 
-    //Turn Left
+//Turn Left
     if(ch_2<=1400){
       if(a0r==0 && a2r==0 && a4r==0 && a6r==0 && a8r==0 && a10r==0 && step==0){
         a0=-stepLength;
@@ -1434,7 +1430,7 @@ void loop() {
         step=0;
       }
     }
-    //Turn Right
+//Turn Right
     if(ch_2>=1600){
       if(a0r==0 && a2r==0 && a4r==0 && a6r==0 && a8r==0 && a10r==0 && step==0){
         a0=stepLength;
@@ -1483,10 +1479,10 @@ void loop() {
       }
     }
   }
-  //Pose for disarmed
+//Pose for disarmed
   else{
-    a0=a2=a4=a6=a8=a10=0;
-    a1=a3=a5=a7=a9=a11=legIdle;
+  a0=a2=a4=a6=a8=a10=0;
+  a1=a3=a5=a7=a9=a11=legIdle;
   }
 
   //pack all the data into one very long char to send it back to the client
@@ -1495,166 +1491,166 @@ void loop() {
   //Serial.println (dataToClient);
 
 
-  //Simple ramped controller to set the speed of the servos, control speed via delay (int v) and eps is used to implement deadband and avoid jittering 
-  if(a0r<=a0-eps){
-    setServo(0,a0r+90+korr+comp0); 
-    a0r = a0r+t;
-  }
-  else if(a0r>=a0+eps){
-    setServo(0,a0r+90+korr+comp0);
-    a0r = a0r-t; 
-  }
-  else{
-    a0r=a0;
-    setServo(0,a0r+90+korr+comp0);
-  }
+//Simple ramped controller to set the speed of the servos, control speed via delay (int v) and eps is used to implement deadband and avoid jittering 
+if(a0r<=a0-eps){
+  setServo(0,a0r+90+korr+comp0); 
+  a0r = a0r+t;
+}
+else if(a0r>=a0+eps){
+  setServo(0,a0r+90+korr+comp0);
+  a0r = a0r-t; 
+}
+else{
+  a0r=a0;
+  setServo(0,a0r+90+korr+comp0);
+}
 
-  if(a1r<=a1-eps){
-    setServo(1,180-a1r-90+comp1); 
-    a1r = a1r+t;
-  }
-  else if(a1r>=a1+eps){
-    setServo(1,180-a1r-90+comp1); 
-    a1r = a1r-t;
-  }
-  else{
-    a1r=a1;
-    setServo(1,180-a1r-90+comp1);
-  }
+if(a1r<=a1-eps){
+  setServo(1,180-a1r-90+comp1); 
+  a1r = a1r+t;
+}
+else if(a1r>=a1+eps){
+  setServo(1,180-a1r-90+comp1); 
+  a1r = a1r-t;
+}
+else{
+  a1r=a1;
+  setServo(1,180-a1r-90+comp1);
+}
 
-  if(a2r<=a2-eps){
-    setServo(2,90-a2r-korr+comp2); 
-    a2r = a2r+t;
-  }
-  else if(a2r>=a2+eps){
-    setServo(2,90-a2r-korr+comp2);  
-    a2r = a2r-t;
-  }
-  else{
-    a2r=a2;
-    setServo(2,90-a2r-korr+comp2); 
-  }
+if(a2r<=a2-eps){
+  setServo(2,90-a2r-korr+comp2); 
+  a2r = a2r+t;
+}
+else if(a2r>=a2+eps){
+  setServo(2,90-a2r-korr+comp2);  
+  a2r = a2r-t;
+}
+else{
+  a2r=a2;
+  setServo(2,90-a2r-korr+comp2); 
+}
 
-  if(a3r<=a3-eps){
-    setServo(3,a3r+90+comp3); 
-    a3r = a3r+t;
-  }
-  else if(a3r>=a3+eps){
-    setServo(3,a3r+90+comp3);  
-    a3r = a3r-t;
-  }
-  else{
-    a3r=a3;
-    setServo(3,a3r+90+comp3); 
-  }
+if(a3r<=a3-eps){
+  setServo(3,a3r+90+comp3); 
+  a3r = a3r+t;
+}
+else if(a3r>=a3+eps){
+  setServo(3,a3r+90+comp3);  
+  a3r = a3r-t;
+}
+else{
+  a3r=a3;
+  setServo(3,a3r+90+comp3); 
+}
 
-  if(a4r<=a4-eps){
-    setServo(4,a4r+90+comp4);
-    a4r = a4r+t;
-  }
-  else if(a4r>=a4+eps){
-    setServo(4,a4r+90+comp4);
-    a4r = a4r-t;
-  }
-  else{
-    a4r=a4;
-    setServo(4,a4r+90+comp4);
-  }
+if(a4r<=a4-eps){
+  setServo(4,a4r+90+comp4);
+  a4r = a4r+t;
+}
+else if(a4r>=a4+eps){
+  setServo(4,a4r+90+comp4);
+  a4r = a4r-t;
+}
+else{
+  a4r=a4;
+  setServo(4,a4r+90+comp4);
+}
 
-  if(a5r<=a5-eps){
-    setServo(5,a5r+90+comp5); 
-    a5r = a5r+t; 
-  }
-  else if(a5r>=a5+eps){
-    setServo(5,a5r+90+comp5); 
-    a5r = a5r-t;
-  }
-  else{
-    a5r=a5;
-    setServo(5,a5r+90+comp5);
-  }  
+if(a5r<=a5-eps){
+  setServo(5,a5r+90+comp5); 
+  a5r = a5r+t; 
+}
+else if(a5r>=a5+eps){
+  setServo(5,a5r+90+comp5); 
+  a5r = a5r-t;
+}
+else{
+  a5r=a5;
+  setServo(5,a5r+90+comp5);
+}  
 
-  if(a6r<=a6-eps){
-    setServo(6,90-a6r+comp6); 
-    a6r = a6r+t;
-  }
-  else if(a6r>=a6+eps){
-    setServo(6,90-a6r+comp6); 
-    a6r = a6r-t;
-  }
-  else{
-    a6r=a6;
-    setServo(6,90-a6r+comp6);
-  }
+if(a6r<=a6-eps){
+  setServo(6,90-a6r+comp6); 
+  a6r = a6r+t;
+}
+else if(a6r>=a6+eps){
+  setServo(6,90-a6r+comp6); 
+  a6r = a6r-t;
+}
+else{
+  a6r=a6;
+  setServo(6,90-a6r+comp6);
+}
 
-  if(a7r<=a7-eps){
-    setServo(7,180-a7r-90+comp7); 
-    a7r = a7r+t;
-  }
-  else if(a1r>=a1+eps){
-    setServo(7,180-a7r-90+comp7); 
-    a7r = a7r-t;
-  }
-  else{
-    a7r=a7;
-    setServo(7,180-a7r-90+comp7);
-  }
-  if(a8r<=a8-eps){
-    setServo(8,a8r+90-korr+comp8);
-    a8r = a8r+t;
-  }
-  else if(a8r>=a8+eps){
-    setServo(8,a8r+90-korr+comp8);
-    a8r = a8r-t;
-  }
-  else{
-    a8r=a8;
-    setServo(8,a8r+90-korr+comp8);
-  }
+if(a7r<=a7-eps){
+  setServo(7,180-a7r-90+comp7); 
+  a7r = a7r+t;
+}
+else if(a1r>=a1+eps){
+  setServo(7,180-a7r-90+comp7); 
+  a7r = a7r-t;
+}
+else{
+  a7r=a7;
+  setServo(7,180-a7r-90+comp7);
+}
+if(a8r<=a8-eps){
+  setServo(8,a8r+90-korr+comp8);
+  a8r = a8r+t;
+}
+else if(a8r>=a8+eps){
+  setServo(8,a8r+90-korr+comp8);
+  a8r = a8r-t;
+}
+else{
+  a8r=a8;
+  setServo(8,a8r+90-korr+comp8);
+}
 
-  if(a9r<=a9-eps){
-    setServo(9,a9r+90+comp9); 
-    a9r = a9r+t; 
-  }
-  else if(a9r>=a9+eps){
-    setServo(9,a9r+90+comp9); 
-    a9r = a9r-t;
-  }
-  else{
-    a9r=a9;
-    setServo(9,a9r+90+comp9);
-  }  
+if(a9r<=a9-eps){
+  setServo(9,a9r+90+comp9); 
+  a9r = a9r+t; 
+}
+else if(a9r>=a9+eps){
+  setServo(9,a9r+90+comp9); 
+  a9r = a9r-t;
+}
+else{
+  a9r=a9;
+  setServo(9,a9r+90+comp9);
+}  
 
-  if(a10r<=a10-eps){
-    setServo(10,90-a10r+korr+comp10); 
-    a10r = a10r+t;
-  }
-  else if(a10r>=a10+eps){
-    setServo(10,90-a10r+korr+comp10); 
-    a10r = a10r-t;
-  }
-  else{
-    a10r=a10;
-    setServo(10,90-a10r+korr+comp10);
-  }
+if(a10r<=a10-eps){
+  setServo(10,90-a10r+korr+comp10); 
+  a10r = a10r+t;
+}
+else if(a10r>=a10+eps){
+  setServo(10,90-a10r+korr+comp10); 
+  a10r = a10r-t;
+}
+else{
+  a10r=a10;
+  setServo(10,90-a10r+korr+comp10);
+}
 
-  if(a11r<=a11-eps){
-    setServo(11,180-a11r-90+comp11); 
-    a11r = a11r+t;
-  }
-  else if(a1r>=a1+eps){
-    setServo(11,180-a11r-90+comp11); 
-    a11r = a11r-t;
-  }
-  else{
-    a11r=a11;
-    setServo(11,180-a11r-90+comp11);
-  }
+if(a11r<=a11-eps){
+  setServo(11,180-a11r-90+comp11); 
+  a11r = a11r+t;
+}
+else if(a1r>=a1+eps){
+  setServo(11,180-a11r-90+comp11); 
+  a11r = a11r-t;
+}
+else{
+  a11r=a11;
+  setServo(11,180-a11r-90+comp11);
+}
 
-  delay(v);
-  Serial.print(ch_1);
-  Serial.print("/");
-  Serial.println(a6r);
+delay(v);
+Serial.print(ch_1);
+Serial.print("/");
+Serial.println(a6r);
 }
 //function to set a servo to a defined position
 void setServo(int servo, int angle) {
@@ -1689,7 +1685,7 @@ void liftLeg(int servo){
     setServo(7,180-a7-90+comp7); 
     delay(y);
   }
-  else if(servo==9){
+    else if(servo==9){
     a9=a9-stepLift;
     a9r=a9;
     setServo(9,a9+90+comp9);
@@ -1729,7 +1725,7 @@ void lowerLeg(int servo){
     setServo(7,180-a7-90+comp7);
     delay(y);
   }
-  else if(servo==9){
+    else if(servo==9){
     a9=a9+stepLift;
     a9r=a9;
     setServo(9,a9+90+comp9);
@@ -1741,5 +1737,6 @@ void lowerLeg(int servo){
     setServo(11,180-a11-90+comp11);
     delay(y);
   }
+
 }
 
