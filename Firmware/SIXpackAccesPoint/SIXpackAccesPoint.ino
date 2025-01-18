@@ -12,8 +12,8 @@
 
 // Credential for the Wifi access point
 //feel free to change that
-const char* ssid = "SIXpack";
-const char* password = "delta3robotics";
+const char* ssid = "SIXpackEds";
+const char* password = "aaaaaaaa";
 //Instatntiation of communication variables, this was made for Alpha 
 //most of them are not used for ESPiderman and can be deleted carefully
 bool lightOn=false;
