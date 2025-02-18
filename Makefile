@@ -1,5 +1,5 @@
 # Input the serial port using an environment variable.
-SELECTED_SERIAL_PORT=$(if $(SERIAL_PORT), $(SERIAL_PORT), notset)
+SELECTED_SERIAL_PORT=$(if $(SERIAL_PORT), $(SERIAL_PORT),notset)
 # Optionally input the project PROJECT=Firmware/SIXpackDebug
 SELECTED_PROJECT:=$(if $(PROJECT), $(PROJECT), Firmware/SIXpackAccesPoint)
 
@@ -38,8 +38,13 @@ else
 endif
 
 monitor:
-	arduino-cli monitor --port $(SELECTED_SERIAL_PORT)
-
+ifeq ($(SELECTED_SERIAL_PORT),notset)
+	@echo "Pass in serial port: SERIAL_PORT=xxx make monitor"
+else
+	@cd $(SELECTED_PROJECT) \
+		&& arduino-cli monitor --port $(SELECTED_SERIAL_PORT)
+endif
+ 
 usb:
 	@cd $(SELECTED_PROJECT) \
 		&& arduino-cli board list \
